@@ -1,0 +1,26 @@
+{
+    "holidays": [
+        "01.01"
+    ],
+    "users": {
+        "<telegram_user_name>": {
+            "first_name": "Ace",
+            "birthday": "01.01",
+            "is_on_vacation": false
+        }
+    },
+    "dsm": {
+        "hosts": [
+            "<telegram_user_name_1>"
+        ],
+        "current": "<telegram_user_name_1>"
+    },
+    "release": {
+        "order": [
+            "<telegram_user_name_1>",
+            "<telegram_user_name_2>",
+            "<telegram_user_name_3>"
+        ],
+        "current": "<telegram_user_name_3>"
+    }
+}
