@@ -60,18 +60,25 @@ To let this bot interact within the group you need to configure it via [@BotFath
 - `/setprivacy` - Enable
 - `/setcommands` - List of commands
 
-### Run setup.sh
+### Run setup scripts
 
 ```
-chmod +x setup.sh && ./setup.sh
+chmod +x setup1.sh
+chmod +x setup2.sh
+./setup1.sh
+sudo ./setup2.sh
 ```
 
-This setup script will do the following:
+setup1.sh will do the following:
 - Rename *.example files.
 - Create run_bot.sh
 - Create run_restart.sh
-- Create, enable and start `<bot name>` systemd service
+- Create `<bot name>` systemd service in the working directory
 - Schedule a cron job to restart bot daily (just in case, y'know)
+
+setup2.sh will do the following:
+- Create `<bot name>` systemd service in /etc/systemd/system directory
+- Enable and start `<bot name>` systemd service
 
 ### Add this bot to your group
 
