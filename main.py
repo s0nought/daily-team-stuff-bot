@@ -55,7 +55,6 @@ def check_admin(func):
 
     return wrapper
 
-@check_user
 async def bot_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await context.bot.send_message(
         chat_id = update.effective_chat.id,
