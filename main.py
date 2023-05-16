@@ -212,7 +212,8 @@ async def daily_release(context: ContextTypes.DEFAULT_TYPE) -> None:
     if user_name in vacation_list:
         text += f"{user_name} (в отпуске)\n"
 
-        subs = settings.get_release_order().remove(user_name)
+        subs = settings.get_release_order()
+        subs.remove(user_name)
 
         text += " ".join(map(lambda x: "@" + x, subs))
     else:
