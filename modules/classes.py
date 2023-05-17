@@ -142,7 +142,7 @@ class Settings:
         self.save()
 
     def tick_dsm(self) -> None:
-        candidates = set(self.get_users())
+        candidates = set(self.get_team_members())
         candidates.difference_update(set(self.get_dsm_hosts())) # already hosted
         candidates.difference_update(set(self.get_vacation_list())) # on vacation
 
