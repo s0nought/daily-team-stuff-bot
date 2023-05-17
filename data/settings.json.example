@@ -6,7 +6,8 @@
         "<telegram_user_name>": {
             "first_name": "Ace",
             "birthday": "01.01",
-            "is_on_vacation": false
+            "is_on_vacation": false,
+            "is_team_member": true
         }
     },
     "dsm": {

@@ -37,7 +37,18 @@ def check_user(func):
     async def wrapper(*args):
         user_name = args[0].message.from_user.username
 
-        if user_name not in settings.get_users():
+        if not settings.is_user(user_name):
+            return
+
+        await func(*args)
+
+    return wrapper
+
+def check_team_member(func):
+    async def wrapper(*args):
+        user_name = args[0].message.from_user.username
+
+        if not settings.is_team_member(user_name):
             return
 
         await func(*args)
@@ -88,7 +99,7 @@ async def bot_release(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
         text = f"Очередь релизить:\n{first_name}\n{user_name}"
     )
 
-@check_user
+@check_team_member
 async def bot_onvacation(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_name = update.message.from_user.username
     first_name = settings.get_first_name(user_name)
@@ -100,7 +111,7 @@ async def bot_onvacation(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         text = f"{first_name}, установлен статус \"В отпуске\""
     )
 
-@check_user
+@check_team_member
 async def bot_fromvacation(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_name = update.message.from_user.username
     first_name = settings.get_first_name(user_name)
@@ -157,8 +168,9 @@ async def bot_adduser(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
     user_name = context.args[0] # str
     first_name = context.args[1] # str
     birthday = context.args[2] # %d.%m
+    is_team_member = bool(int(context.args[3])) # 1|0
 
-    settings.update_user(user_name, first_name, birthday)
+    settings.update_user(user_name, first_name, birthday, is_team_member)
 
     await context.bot.send_message(
         chat_id = update.effective_chat.id,

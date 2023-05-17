@@ -52,11 +52,12 @@ class Settings:
 
         return x["first_name"] if x else "-"
 
-    def update_user(self, user_name: str, first_name: str, birthday: str) -> None:
+    def update_user(self, user_name: str, first_name: str, birthday: str, is_team_member: bool) -> None:
         user_data = {
             "first_name": first_name,
             "birthday": birthday,
-            "is_on_vacation": False
+            "is_on_vacation": False,
+            "is_team_member": is_team_member
         }
 
         self.users.update({user_name: user_data})
@@ -68,6 +69,20 @@ class Settings:
             self.users.pop(user_name)
             self.save()
             self.generate_birthdays_map()
+
+    # team members
+
+    def get_team_members(self) -> list[str]:
+        result = list()
+
+        for user_name, user_data in self.users.items():
+            if user_data.get("is_team_member"):
+                result.append(user_name)
+
+        return result
+
+    def is_team_member(self, user_name: str) -> bool:
+        return True if user_name in self.get_team_members() else False
 
     # birthdays
 
