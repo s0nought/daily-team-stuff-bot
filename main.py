@@ -259,7 +259,7 @@ async def daily_birthday(context: ContextTypes.DEFAULT_TYPE) -> None:
     if len(birthday_boys) == 0: return
 
     text = "Поздравим с днём рождения!\n"
-    text += ", ".join(map(lambda x: settings.get_first_name(x) + "@" + x, birthday_boys))
+    text += ", ".join(map(lambda x: settings.get_first_name(x) + " @" + x, birthday_boys))
 
     await context.bot.send_message(
         chat_id = TELEGRAM_GROUP_ID,
