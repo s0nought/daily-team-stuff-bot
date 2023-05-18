@@ -1,10 +1,10 @@
 import random
 
-from modules.constants import (
+from .constants import (
     SETTINGS_FILE_PATH
 )
 
-from modules.utils import (
+from .utils import (
     load_json,
     dump_json,
     get_current_date

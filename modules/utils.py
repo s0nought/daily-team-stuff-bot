@@ -1,7 +1,7 @@
 import json
 from datetime import datetime, date, timezone
 
-from modules.constants import (
+from .constants import (
     FIRST_PLANNING_DATETIME_UTC
 )
 
