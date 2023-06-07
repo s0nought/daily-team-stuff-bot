@@ -1,4 +1,5 @@
 import random
+from calendar import Calendar
 
 from .constants import (
     SETTINGS_FILE_PATH
@@ -7,6 +8,8 @@ from .constants import (
 from .utils import (
     load_json,
     dump_json,
+    get_datetime,
+    format_datetime,
     get_current_date
 )
 
@@ -167,19 +170,26 @@ class Settings:
         self.save()
 
     def get_release_current(self) -> str:
-        return self.release.get("current")
+        date = get_current_date()
+        return self.release["schedule"].get(date, "N/A")
 
-    def set_release_current(self, user_name: str) -> None:
-        self.release.update({"current": user_name})
+    def set_release_schedule(self, schedule: dict[str, str]) -> None:
+        self.release.update({"schedule" : schedule})
         self.save()
 
-    def tick_release(self):
+    def generate_release_schedule_month(self, start_index: int) -> None:
         order = self.get_release_order()
-        current_index = order.index(self.get_release_current())
+        cur_dar = get_datetime()
+        cal = Calendar()
+        schedule = dict()
+        i = start_index
 
-        next_index = current_index + 1 if (current_index + 1) < len(order) else 0
-        next_turn = order[next_index]
+        for dt in cal.itermonthdates(cur_dar.year, cur_dar.month):
+            date = format_datetime(dt, r"%d.%m")
 
-        self.set_release_current(next_turn)
+            schedule.update({date : order[i]})
+            i += 1
+
+        self.set_release_schedule(schedule)
 
 settings = Settings()
