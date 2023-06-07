@@ -177,8 +177,9 @@ class Settings:
         self.release.update({"schedule" : schedule})
         self.save()
 
-    def generate_release_schedule_month(self, start_index: int) -> None:
+    def generate_release_schedule_month(self, start_index: int = 0) -> None:
         order = self.get_release_order()
+        order_len = len(order)
         cur_dar = get_datetime()
         cal = Calendar()
         schedule = dict()
@@ -189,6 +190,9 @@ class Settings:
 
             schedule.update({date : order[i]})
             i += 1
+
+            if i >= order_len:
+                i = 0
 
         self.set_release_schedule(schedule)
 
