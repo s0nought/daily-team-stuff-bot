@@ -180,12 +180,13 @@ class Settings:
     def generate_release_schedule_month(self, start_index: int = 0) -> None:
         order = self.get_release_order()
         order_len = len(order)
-        cur_date = get_datetime()
+        cur_dt = get_datetime()
+        cur_date = cur_dt.date()
         cal = Calendar()
         schedule = dict()
         i = start_index
 
-        for dt in cal.itermonthdates(cur_date.year, cur_date.month):
+        for dt in cal.itermonthdates(cur_dt.year, cur_dt.month):
             if dt < cur_date:
                 continue
 
