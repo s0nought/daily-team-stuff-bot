@@ -22,6 +22,8 @@
             "<telegram_user_name_2>",
             "<telegram_user_name_3>"
         ],
-        "current": "<telegram_user_name_3>"
+        "schedule": {
+            "01.01": "<telegram_user_name_1>"
+        }
     }
 }

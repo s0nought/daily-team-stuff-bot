@@ -207,9 +207,18 @@ async def bot_setvacation(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         text = f"{first_name}, установлен статус {on_vacation_text if status else from_vacation_text}"
     )
 
-async def daily_release(context: ContextTypes.DEFAULT_TYPE) -> None:
-    settings.tick_release() # must tick every day
+@check_admin
+async def bot_generate_release_schedule_month(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    start_index = int(context.args[0]) # int
 
+    settings.generate_release_schedule_month(start_index)
+
+    await context.bot.send_message(
+        chat_id = update.effective_chat.id,
+        text = "Готово."
+    )
+
+async def daily_release(context: ContextTypes.DEFAULT_TYPE) -> None:
     if is_friday(): return
     if is_weekend(): return
     if settings.is_holiday(): return
@@ -307,6 +316,9 @@ if __name__ == "__main__":
 
     setvacation_handler = CommandHandler("setvacation", bot_setvacation)
     app.add_handler(setvacation_handler)
+
+    genreleasemonth_handler = CommandHandler("genreleasemonth", bot_generate_release_schedule_month)
+    app.add_handler(genreleasemonth_handler)
 
     job_queue = app.job_queue
 
