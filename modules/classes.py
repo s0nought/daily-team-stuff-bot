@@ -180,12 +180,12 @@ class Settings:
     def generate_release_schedule_month(self, start_index: int = 0) -> None:
         order = self.get_release_order()
         order_len = len(order)
-        cur_dar = get_datetime()
+        cur_date = get_datetime()
         cal = Calendar()
         schedule = dict()
         i = start_index
 
-        for dt in cal.itermonthdates(cur_dar.year, cur_dar.month):
+        for dt in cal.itermonthdates(cur_date.year, cur_date.month):
             date = format_datetime(dt, r"%d.%m")
 
             schedule.update({date : order[i]})
