@@ -186,6 +186,9 @@ class Settings:
         i = start_index
 
         for dt in cal.itermonthdates(cur_date.year, cur_date.month):
+            if dt < cur_date:
+                continue
+
             date = format_datetime(dt, r"%d.%m")
 
             schedule.update({date : order[i]})
