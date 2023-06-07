@@ -1,6 +1,7 @@
+**/__pycache__/*
+
 assets/*
 data/settings.json
-modules/__pycache__/*
 modules/constants.py
 modules/secrets.py
 
