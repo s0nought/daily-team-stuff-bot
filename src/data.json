@@ -1,0 +1,54 @@
+{
+    "duty": {
+        "order": [
+            "2023-07-01T00:00:01Z",
+            "2023-07-02T00:00:01Z",
+            "2023-07-03T00:00:01Z"
+        ],
+        "turnMap": {
+            "021": "user_name_5",
+            "102": "user_name_6",
+            "210": "user_name_7"
+        },
+        "turnCode": "021"
+    },
+    "holidays": [
+        "01.02",
+        "01.03",
+        "01.04",
+        "01.05",
+        "01.06",
+        "02.23",
+        "02.24",
+        "03.08",
+        "05.01",
+        "05.08",
+        "05.09",
+        "06.12",
+        "11.06"
+    ],
+    "members": [
+        "user_name_0",
+        "user_name_1",
+        "user_name_2",
+        "user_name_3",
+        "user_name_4",
+        "user_name_5",
+        "user_name_6",
+        "user_name_7"
+    ],
+    "updateTurnsJobTimeUTC": "00:13:37Z",
+    "notificationsJobTimeUTC": "06:00:00Z",
+    "firstPlanningDatetimeUTC": "2023-01-30T00:00:01Z",
+    "onVacation": [
+        "user_name_3"
+    ],
+    "standup": {
+        "turn": "user_name_0",
+        "ban": [
+            "user_name_5",
+            "user_name_2",
+            "user_name_0"
+        ]
+    }
+}
