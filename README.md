@@ -2,6 +2,8 @@
 
 Telegram bot to automate standup and duty notifications.
 
+NB: This bot requires Python 3.11 or newer to run!
+
 ## Features
 
 - Standup
@@ -54,6 +56,10 @@ pip3 install -r requirements.txt
 - `BOT_TOKEN` - bot's token
 - `GROUP_ID` - group's ID (to send notifications to)
 - `ADMIN_IDS` - admin IDs
+
+### data.py
+
+- `DATA_FILE_PATH` - full path to `data.json`
 
 ### data.json
 

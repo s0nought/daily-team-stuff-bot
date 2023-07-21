@@ -2,7 +2,7 @@ import json
 from datetime import datetime, date, time, timezone
 import random
 
-DATA_FILE_PATH = "data.json"
+DATA_FILE_PATH = "/home/s0nought/daily-team-stuff-bot/data.json"
 
 def get_date() -> str:
     """Return current date."""

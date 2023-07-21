@@ -97,7 +97,7 @@ async def _export(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def _import(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """/import - import bot's data from a string."""
 
-    BD._import(context.args[0])
+    BD._import("".join(context.args))
     BD._save()
 
     await _export(update, context)
@@ -108,7 +108,7 @@ async def _vacation(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     await context.bot.send_message(
         chat_id = update.effective_chat.id,
-        text = "\n".join(BD.get_on_vacation())
+        text = "\n".join(BD.get_on_vacation()) or "-"
     )
 
 @check_member
