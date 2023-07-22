@@ -129,7 +129,7 @@ async def _fromvacation(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
 
     await _vacation(update, context)
 
-async def _update_turns_job() -> None:
+async def _update_turns_job(context: ContextTypes.DEFAULT_TYPE) -> None:
     """Repeating job that updates duty and standup turns."""
 
     BD.tick_duty_turn() # must tick daily
