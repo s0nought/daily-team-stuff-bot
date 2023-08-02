@@ -1,3 +1,6 @@
+# 230802
+- Fix a bug in is_planning_day() where function returns false positives
+
 # 230722
 - Update .gitignore
 - Fix a bug in _update_turns_job where command fails to run
