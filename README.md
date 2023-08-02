@@ -69,7 +69,8 @@ pip3 install -r requirements.txt
 |members|list[str]|list of members (Telegram user names)|
 |updateTurnsJobTimeUTC|str|when to execute update turns job (time, UTC)|
 |notificationsJobTimeUTC|str|when to execute notifications job (time, UTC)|
-|firstPlanningDatetimeUTC|str|date of the first planning (datetime, UTC)|
+|planning.intervalDays|int|interval between plannings in days|
+|planning.nextDate|str|next planning date (%Y-%m-%d)|
 |onVacation|list[str]|list of members on vacation|
 |duty.order|list[str]|duty order (datetime, UTC)|
 |duty.turnMap|dict|turn codes and corresponding user names|

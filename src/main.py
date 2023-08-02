@@ -133,6 +133,7 @@ async def _update_turns_job(context: ContextTypes.DEFAULT_TYPE) -> None:
     """Repeating job that updates duty and standup turns."""
 
     BD.tick_duty_turn() # must tick daily
+    BD.tick_next_planning_day_date()
 
     if not BD.is_holiday() and \
         not BD.is_planning_day() and \
@@ -155,10 +156,12 @@ async def _notifications_job(context: ContextTypes.DEFAULT_TYPE) -> None:
     standup_turn = BD.get_standup_turn()
     duty_turn = BD.get_duty_turn()
 
-    text = f"{meeting_type}"
+    text = ""
 
-    if meeting_type == "Standup":
-        text += f"\n\nStandup: @{standup_turn}"
+    if meeting_type == "Planning":
+        text += "Planning"
+    else:
+        text += f"Standup: @{standup_turn}"
 
     if not is_friday():
         if not BD.is_on_vacation(duty_turn):

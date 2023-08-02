@@ -1,18 +1,18 @@
 import json
-from datetime import datetime, date, time, timezone
+from datetime import datetime, date, time, timezone, timedelta
 import random
 
 DATA_FILE_PATH = "/home/s0nought/daily-team-stuff-bot/data.json"
-
-def get_date() -> str:
-    """Return current date."""
-
-    return date.today()
 
 def get_datetime_utc() -> datetime:
     """Return current datetime (UTC)."""
 
     return datetime.now(timezone.utc)
+
+def get_date() -> str:
+    """Return current date (UTC)."""
+
+    return get_datetime_utc().date()
 
 def get_weekday_iso() -> int:
     """Return day of the week (ISO)."""
@@ -108,16 +108,36 @@ class BotData:
 
         return time.fromisoformat(self.data.get("notificationsJobTimeUTC", "06:00:00Z"))
 
-    def get_first_planning_datetime_utc(self) -> datetime:
-        """Return first planning datetime (UTC)."""
+    def get_next_planning_day_date(self) -> date:
+        """Return next planning day date."""
 
-        return datetime.fromisoformat(self.data.get("firstPlanningDatetimeUTC", "2023-01-30T00:00:01Z"))
+        return date.fromisoformat(self.data["planning"].get("nextDate", "2023-08-14"))
 
-    def is_planning_day(self, dt: datetime = get_datetime_utc()) -> bool:
+    def set_next_planning_day_date(self, date: str) -> None:
+        """Set next planning day date."""
+
+        self.data["planning"]["nextDate"] = date
+        return
+
+    def get_planning_interval_days(self) -> int:
+        """Get planning interval days."""
+
+        return self.data["planning"].get("intervalDays", 14)
+
+    def tick_next_planning_day_date(self) -> None:
+        """Calculate and set next planning day date."""
+
+        interval_days = self.get_planning_interval_days()
+        cur_date = get_date()
+
+        while cur_date > self.get_next_planning_day_date():
+            next_date = self.get_next_planning_day_date() + timedelta(days = interval_days)
+            self.set_next_planning_day_date(next_date.strftime(r"%Y-%m-%d"))
+
+    def is_planning_day(self, d: date = get_date()) -> bool:
         """Return True if given datetime is a planning day, False otherwise."""
 
-        x = (dt - self.get_first_planning_datetime_utc()).days
-        return True if x % 14 == 0 else False
+        return True if d == self.get_next_planning_day_date() else False
 
     def get_standup_turn(self) -> str:
         """Return standup turn."""
