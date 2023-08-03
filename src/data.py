@@ -29,6 +29,11 @@ def is_weekend() -> bool:
 
     return True if get_weekday_iso() > 5 else False
 
+def convert_to_date(d: str) -> date:
+    """Convert ISO format date string to date object."""
+
+    return date.fromisoformat(d)
+
 class BotData:
     """
     Bot's data.
@@ -188,42 +193,65 @@ class BotData:
         self.add_to_standup_ban(turn)
         return
 
-    def get_duty_order(self) -> list[str]:
-        """Return duty order."""
+    def get_duty_engineers(self) -> list[str]:
+        """Return duty engineers."""
 
-        return self.data["duty"].get("order", [""])
-
-    def get_duty_turn_code(self) -> str:
-        """Return duty turn code."""
-
-        return self.data["duty"].get("turnCode", "N/A")
-
-    def set_duty_turn_code(self, code: str) -> None:
-        """Set duty turn code."""
-
-        self.data["duty"]["turnCode"] = code
-        return
-
-    def get_duty_turn(self) -> str:
-        """Return duty turn."""
-
-        return self.data["duty"]["turnMap"].get(self.get_duty_turn_code(), "N/A")
-
-    def tick_duty_turn(self) -> None:
-        """Calculate and set duty turn code."""
-
-        code = ""
-
-        for dt_str in self.get_duty_order():
-            code += str((get_datetime_utc() - datetime.fromisoformat(dt_str)).days % 3)
-
-        self.set_duty_turn_code(code)
-        return
+        return self.data["duty"].get("engineers", [""])
 
     def get_duty_substitutes(self, user_name: str) -> list[str]:
-        """Return duty substitutes (when user name is on vacation)."""
+        """Return available duty substitutes for the given user_name."""
 
-        all = list(self.data["duty"]["turnMap"].values())
-        return all.remove(user_name)
+        candidates = set(self.get_duty_engineers()) # all
+        candidates.difference_update(set(self.get_on_vacation())) # subtract on vacation
+        candidates.difference_update(set([user_name])) # subtract the given user_name
+
+        return candidates if len(candidates) > 0 else ["N/A"]
+
+    def get_current_duty_turn(self) -> str:
+        """Get current duty turn."""
+
+        return self.data["duty"].get("turn", "N/A")
+
+    def set_current_duty_turn(self, user_name: str) -> None:
+        """Set current duty turn."""
+
+        self.data["duty"]["turn"] = user_name
+        return
+
+    def get_next_duty_date(self, user_name: str) -> date:
+        """Get next duty date for the given user_name."""
+
+        return convert_to_date(self.data["duty"]["schedule"][user_name]["nextDate"])
+
+    def set_next_duty_date(self, user_name: str, date: str) -> None:
+        """Set next duty date for the given user_name as date."""
+
+        self.data["duty"]["schedule"][user_name] = date
+        return
+
+    def update_duty_schedule(self) -> None:
+        """Update duty schedule."""
+
+        cur_date = get_date()
+
+        for user_name, duty_data in self.data["duty"]["schedule"]:
+            repeat_every_days = duty_data["repeatEveryDays"]
+
+            while cur_date > self.get_next_duty_date(user_name):
+                next_date = self.get_next_duty_date(user_name) + timedelta(days = repeat_every_days)
+                self.set_next_duty_date(user_name, next_date.strftime(r"%Y-%m-%d"))
+
+        return
+
+    def tick_duty_turn(self) -> None:
+        """Calculate and set next duty turn."""
+
+        cur_date = get_date().strftime(r"%Y-%m-%d")
+
+        for user_name, duty_data in self.data["duty"]["schedule"]:
+            if duty_data["nextDate"] == cur_date:
+                self.set_current_duty_turn(user_name)
+
+        return
 
 bot_data = BotData()

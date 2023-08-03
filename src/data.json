@@ -1,16 +1,25 @@
 {
     "duty": {
-        "order": [
-            "2023-07-01T00:00:01Z",
-            "2023-07-02T00:00:01Z",
-            "2023-07-03T00:00:01Z"
+        "engineers": [
+            "user_name_5",
+            "user_name_6",
+            "user_name_7"
         ],
-        "turnMap": {
-            "021": "user_name_5",
-            "102": "user_name_6",
-            "210": "user_name_7"
+        "schedule": {
+            "user_name_5": {
+                "repeatEveryDays": 3,
+                "nextDate": "2023-08-07"
+            },
+            "user_name_6": {
+                "repeatEveryDays": 3,
+                "nextDate": "2023-08-08"
+            },
+            "user_name_7": {
+                "repeatEveryDays": 3,
+                "nextDate": "2023-08-09"
+            }
         },
-        "turnCode": "021"
+        "turn": "user_name_7"
     },
     "holidays": [
         "01.02",

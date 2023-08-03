@@ -1,3 +1,6 @@
+# 230803
+- Refactor duty logic
+
 # 230802
 - Fix a bug in is_planning_day() where function returns false positives
 

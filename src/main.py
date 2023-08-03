@@ -77,7 +77,7 @@ async def _status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """/status - return standup and duty turns."""
 
     standup_turn = BD.get_standup_turn()
-    duty_turn = BD.get_duty_turn()
+    duty_turn = BD.get_current_duty_turn()
 
     await context.bot.send_message(
         chat_id = update.effective_chat.id,
@@ -132,7 +132,9 @@ async def _fromvacation(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
 async def _update_turns_job(context: ContextTypes.DEFAULT_TYPE) -> None:
     """Repeating job that updates duty and standup turns."""
 
-    BD.tick_duty_turn() # must tick daily
+    # must tick daily:
+    BD.update_duty_schedule() 
+    BD.tick_duty_turn()
     BD.tick_next_planning_day_date()
 
     if not BD.is_holiday() and \
@@ -154,7 +156,7 @@ async def _notifications_job(context: ContextTypes.DEFAULT_TYPE) -> None:
         meeting_type = "Standup"
 
     standup_turn = BD.get_standup_turn()
-    duty_turn = BD.get_duty_turn()
+    duty_turn = BD.get_current_duty_turn()
 
     text = ""
 
