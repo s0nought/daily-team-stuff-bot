@@ -234,7 +234,7 @@ class BotData:
 
         cur_date = get_date()
 
-        for user_name, duty_data in self.data["duty"]["schedule"]:
+        for user_name, duty_data in self.data["duty"]["schedule"].items():
             repeat_every_days = duty_data["repeatEveryDays"]
 
             while cur_date > self.get_next_duty_date(user_name):
@@ -248,7 +248,7 @@ class BotData:
 
         cur_date = get_date().strftime(r"%Y-%m-%d")
 
-        for user_name, duty_data in self.data["duty"]["schedule"]:
+        for user_name, duty_data in self.data["duty"]["schedule"].items():
             if duty_data["nextDate"] == cur_date:
                 self.set_current_duty_turn(user_name)
 

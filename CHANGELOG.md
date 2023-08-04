@@ -1,3 +1,6 @@
+# 230804
+- Fix a bug where duty schedule and turn will not update
+
 # 230803
 - Refactor duty logic
 
