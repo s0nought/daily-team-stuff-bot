@@ -226,7 +226,7 @@ class BotData:
     def set_next_duty_date(self, user_name: str, date: str) -> None:
         """Set next duty date for the given user_name as date."""
 
-        self.data["duty"]["schedule"][user_name] = date
+        self.data["duty"]["schedule"][user_name]["nextDate"] = date
         return
 
     def update_duty_schedule(self) -> None:
